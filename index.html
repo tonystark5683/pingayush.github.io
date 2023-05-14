@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jal Hi Jeevan - Water Flow Data</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Jal Hi Jeevan - Water Flow Data</h1>
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Flow Rate (L/min)</th>
+        <th>Date/Time</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <script>
+    $(document).ready(function() {
+      setInterval(function() {
+        $.getJSON('get_data.php', function(data) {
+          var table = $('#data-table tbody');
+          table.empty();
+          $.each(data, function(index, value) {
+            var row = $('<tr>');
+            $('<td>').text(value.id).appendTo(row);
+            $('<td>').text(value.flow_rate).appendTo(row);
+            $('<td>').text(value.date_time).appendTo(row);
+            table.append(row);
+          });
+        });
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
